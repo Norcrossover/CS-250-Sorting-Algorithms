@@ -10,6 +10,13 @@ int n = 100;
 // --------------- helpers ----------------------
 int create_random_number() { return floor(1000 * drand48()); }
 
+int get_array_size() {
+  int size = 0;
+  printf("Please enter in the size of the array: ");
+  scanf("%d", &size);
+  return size;
+}
+
 void create_array_random(int list[]) {
   for (int i = 0; i < n; i++) {
     list[i] = create_random_number();
@@ -70,6 +77,46 @@ void set_array(int list[]) {
     list[i] = 0;
   }
   return;
+}
+
+void selection_sort_running() {
+  int list[n], sorted;
+  create_array_random(list);
+  printf("\nInitial list:\n");
+  print_array(list);
+  printf("\n\nSelection sort... \n");
+  selection_sort(list);
+  printf("Final List:\n");
+  print_array(list);
+  check_sort(list);
+  printf("\n\n");
+}
+
+void merge_sort_running() {
+  int list[n], sorted;
+  create_array_file(list);
+  printf("\nInitial list:\n");
+  print_array(list);
+  printf("\n\nMergesorting... \n\n");
+  mergesort(list, 0, (n-1));
+  printf("Final List:\n");
+  print_array(list);
+  check_sort(list);
+  printf("\n\n");
+}
+
+// (quick sort)
+void smart_sort_running() {
+  int list[n], sorted;
+  create_array_file(list);
+  printf("\nInitial list:\n");
+  print_array(list);
+  printf("\n\nQuick sorting... \n\n");
+  quick_sort(list, 0, (n-1));
+  printf("Final List:\n");
+  print_array(list);
+  check_sort(list);
+  printf("\n\n");
 }
 // --------------- helpers ----------------------
 
@@ -139,30 +186,13 @@ void mergesort(int list[], int lo, int hi) {
   }
 }
 
+void quick_sort(int list[], int lo, int hi) {
+  
+}
+
 // --------------- sorting algorithms ---------------------
 
 int main(void) {
-  int list[n], sorted;
 
-  // create_array_random(list);
-  create_array_file(list);
-
-  printf("\nInitial list:\n");
-  print_array(list);
-
-  printf("\n\nMergesorting... \n\n");
-  mergesort(list, 0, (n-1));
-
-  /*
-  printf("\n\nSelection sort... \n");
-  selection_sort(list);
-  */
-
-  printf("Final List:\n");
-  print_array(list);
-
-  check_sort(list);
-
-  printf("\n\n");
   return 0;
 }
