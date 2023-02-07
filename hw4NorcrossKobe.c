@@ -61,13 +61,17 @@ int check_sort(int list[]) {
   printf("\n\nChecking sorting algorithm correctness...");
   
   for (int i = 0; i < n - 1; i++) {
-    if (list[i] <= list[i + 1])
-      continue;
-    else {
-      printf("\nHERE IS THE ERRORRRRR\n");
-      sorted = 0;
-      break;
+    for (int j = i+1; j < n-1) {
+      if (list[j] > list[i])
+        continue;
+      else {
+        printf("\nHERE IS THE ERRORRRRR\n");
+        sorted = 0;
+        break;
+      }
     }
+    if (sorted == 0)
+      break;
   }
   printf("\n");
   
