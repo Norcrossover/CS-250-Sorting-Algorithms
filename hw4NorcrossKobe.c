@@ -36,12 +36,10 @@ void create_array_file(int list[]) {
   // get the list
   for (int i = 0; i < n; i++) {
     result = scanf("%d\n", &num);
-    
     if (result != 1) {
       printf("ERROR!");
       exit(-1);
     }
-    
     list[i] = num;
   }
 }
@@ -59,7 +57,9 @@ void print_array(int list[]) {
 
 int check_sort(int list[]) {
   int sorted = 1;
+  
   printf("\n\nChecking sorting algorithm correctness...");
+  
   for (int i = 0; i < n - 1; i++) {
     if (list[i] <= list[i + 1])
       continue;
@@ -70,11 +70,13 @@ int check_sort(int list[]) {
     }
   }
   printf("\n");
-  if (sorted == 0) {
+  
+  if (sorted == 0)
     printf("List is not sorted, check algorithm again.");
-  } else {
+  
+  else
     printf("\nLIST IS SORTED! GOOD JOB :D");
-  }
+  
   printf("\n");
 }
 
@@ -158,28 +160,23 @@ void smart_sort(int list[], int low, int high) {
   int left_stop = 0, right_stop = 0; // 0 = false, 1 = true
   int temporary = 0;
 
-  // start: BASE CASE
+  // BASE CASE
   if (low >= high)
     return;
-  // end
 
   while (left != right) {
     // check list elements to see if they need to halt or increment/decrement
     if (left_stop == 0 && left != right) {
-      if (list[left] > pivot) {
+      if (list[left] > pivot)
         left_stop = 1;
-      }
-      else {
+      else
         left++;
-      }
     }
     if (right_stop == 0 && left != right) {
-      if (list[right] < pivot) {
+      if (list[right] < pivot)
         right_stop = 1;
-      }
-      else {
+      else 
         right--;
-      }
     }
 
     // SWAP and RESET indices
@@ -241,7 +238,6 @@ void mergesort_driver() {
   printf("\n\n");
 }
 
-// (quick sort)
 void smart_sort_driver() {
   int list[n];
   create_array_random(list);
@@ -259,7 +255,6 @@ void smart_sort_driver() {
 
 
 int main(void) {
-  //n = 20;
   n = get_array_size();
   smart_sort_driver();
   //mergesort_driver();
