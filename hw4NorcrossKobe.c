@@ -211,7 +211,8 @@ void smart_sort(int list[], int low, int high) {
 // --------------- sorting algorithms ---------------------
 
 
-// ------------------------- Sort subroutines --------
+// ------------------------- Sorting algorithm drivers --------
+
 void selection_sort_driver() {
   int list[n], sorted;
   create_array_random(list);
