@@ -2,12 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// compile with: cc hw2NorcrossKobe.c -lm
-// run with: ./a.out < input.txt
-
 int n = 100;
 
 // --------------- helpers ----------------------
+
 int create_random_number() { return floor(1000 * drand48()); }
 
 int get_array_size() {
@@ -84,6 +82,7 @@ void set_array(int list[]) {
 // --------------- helpers ----------------------
 
 // --------------- sorting algorithms ----------------------
+
 void selection_sort(int list[]) {
   int i, j, temp;
   for (i = 0; i < n - 1; i++) {
@@ -172,7 +171,7 @@ void smart_sort(int list[], int low, int high) {
         right_stop = 1;
       }
       else {
-        right++;
+        right--;
       }
     }
     // end
@@ -189,9 +188,23 @@ void smart_sort(int list[], int low, int high) {
   }
   // end
 
+  // start: swap the pivot
+  if (list[right] < pivot) {
+    list[low] = list[right];
+    list[right] = pivot;
+  }
+  else {  // if list[right] >= pivot
+    list[low] = list[right-1];
+    list[right-1] = pivot;
+  }
+  // end
+
   smart_sort(list, low, middle);
   smart_sort(list, middle+1, high);
 }
+
+// --------------- sorting algorithms ---------------------
+
 
 // ------------------------- Sort subroutines --------
 void selection_sort_driver() {
@@ -209,6 +222,10 @@ void selection_sort_driver() {
 
 void mergesort_driver() {
   int list[n];
+  
+// compile with: cc *.c -lm
+// run with: ./a.out < input.txt
+  
   create_array_file(list);
   printf("\nInitial list:\n");
   print_array(list);
@@ -234,7 +251,8 @@ void smart_sort_driver() {
   printf("\n\n");
 }
 
-// --------------- sorting algorithms ---------------------
+// ------------------------- Sort subroutines --------
+
 
 int main(void) {
   n = 10;
