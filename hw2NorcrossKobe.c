@@ -11,9 +11,11 @@ int n = 100;
 int create_random_number() { return floor(1000 * drand48()); }
 
 int get_array_size() {
-  int size = 0;
+  int size = 0, result;
   printf("Please enter in the size of the array: ");
-  scanf("%d", &size);
+  result = scanf("%d", &size);
+  if (result == -1) 
+    return 0;
   return size;
 }
 
@@ -79,45 +81,6 @@ void set_array(int list[]) {
   return;
 }
 
-void selection_sort_running() {
-  int list[n], sorted;
-  create_array_random(list);
-  printf("\nInitial list:\n");
-  print_array(list);
-  printf("\n\nSelection sort... \n");
-  selection_sort(list);
-  printf("Final List:\n");
-  print_array(list);
-  check_sort(list);
-  printf("\n\n");
-}
-
-void merge_sort_running() {
-  int list[n], sorted;
-  create_array_file(list);
-  printf("\nInitial list:\n");
-  print_array(list);
-  printf("\n\nMergesorting... \n\n");
-  mergesort(list, 0, (n-1));
-  printf("Final List:\n");
-  print_array(list);
-  check_sort(list);
-  printf("\n\n");
-}
-
-// (quick sort)
-void smart_sort_running() {
-  int list[n], sorted;
-  create_array_file(list);
-  printf("\nInitial list:\n");
-  print_array(list);
-  printf("\n\nQuick sorting... \n\n");
-  quick_sort(list, 0, (n-1));
-  printf("Final List:\n");
-  print_array(list);
-  check_sort(list);
-  printf("\n\n");
-}
 // --------------- helpers ----------------------
 
 // --------------- sorting algorithms ----------------------
@@ -186,13 +149,97 @@ void mergesort(int list[], int lo, int hi) {
   }
 }
 
-void quick_sort(int list[], int lo, int hi) {
-  
+void smart_sort(int list[], int low, int high) {
+  int pivot = list[low]; // the value we would like to set in the middle
+  int middle = (high+low) / 2;
+  int left = (low + 1), right = high; // indices to navigate list
+  int left_stop = 0, right_stop = 0; // 0 = false, 1 = true
+  int temporary = 0;
+
+  // start: sorting algorithm at each problem
+  while (left != right) {
+    // start: check list elements to see if they need to pivot
+    if (left_stop == 0 && left != right) {
+      if (list[left] > pivot) {
+        left_stop = 1;
+      }
+      else {
+        left++;
+      }
+    }
+    if (right_stop == 0 && left != right) {
+      if (list[right] < pivot) {
+        right_stop = 1;
+      }
+      else {
+        right++;
+      }
+    }
+    // end
+
+    // start: SWAP and RESET
+    if (left_stop == 1 && right_stop == 1) {
+      temporary = list[right];
+      list[right] = list[left];
+      list[left] = temporary;
+      left_stop = 0;
+      right_stop = 0;
+    }
+    // end
+  }
+  // end
+
+  smart_sort(list, low, middle);
+  smart_sort(list, middle+1, high);
+}
+
+// ------------------------- Sort subroutines --------
+void selection_sort_driver() {
+  int list[n], sorted;
+  create_array_random(list);
+  printf("\nInitial list:\n");
+  print_array(list);
+  printf("\n\nSelection sort... \n");
+  selection_sort(list);
+  printf("Final List:\n");
+  print_array(list);
+  check_sort(list);
+  printf("\n\n");
+}
+
+void mergesort_driver() {
+  int list[n];
+  create_array_file(list);
+  printf("\nInitial list:\n");
+  print_array(list);
+  printf("\n\nMergesorting... \n\n");
+  mergesort(list, 0, (n-1));
+  printf("Final List:\n");
+  print_array(list);
+  check_sort(list);
+  printf("\n\n");
+}
+
+// (quick sort)
+void smart_sort_driver() {
+  int list[n];
+  create_array_random(list);
+  printf("\nInitial list:\n");
+  print_array(list);
+  printf("\n\nSmart sorting... \n\n");
+  smart_sort(list, 0, (n-1));
+  printf("Final List:\n");
+  print_array(list);
+  check_sort(list);
+  printf("\n\n");
 }
 
 // --------------- sorting algorithms ---------------------
 
 int main(void) {
-
+  n = 10;
+  //n = get_array_size();
+  smart_sort_driver();
+  //mergesort_running();
   return 0;
 }
