@@ -47,13 +47,19 @@ void create_array_file(int list[]) {
 }
 
 void print_array(int list[]) {
+  printf("[");
   for (int i = 0; i < n; i++) {
-    printf("%d\t", list[i]);
+    if (i != (n-1))
+      printf("%d, ", list[i]);
+    else      
+      printf("%d", list[i]);
   }
+  printf("]");
 }
 
 int check_sort(int list[]) {
   int sorted = 1;
+  printf("\n\nChecking sorting algorithm correctness...");
   for (int i = 0; i < n - 1; i++) {
     if (list[i] <= list[i + 1])
       continue;
@@ -67,7 +73,7 @@ int check_sort(int list[]) {
   if (sorted == 0) {
     printf("List is not sorted, check algorithm again.");
   } else {
-    printf("LIST IS SORTED! GOOD JOB :D");
+    printf("\nLIST IS SORTED! GOOD JOB :D");
   }
   printf("\n");
 }
@@ -114,9 +120,7 @@ void merge(int list[], int lo, int mid, int hi) {
 
   // main sorting algorithm
   while (mi < hi) {
-    if ((li < left_end) 
-        && (ri >= right_end) 
-        || (temp[li] <= temp[ri])) {
+    if ((li < left_end) && (ri >= right_end) || (temp[li] <= temp[ri])) {
       list[mi] = temp[li];
       li++;
     } else {
@@ -150,14 +154,17 @@ void mergesort(int list[], int lo, int hi) {
 
 void smart_sort(int list[], int low, int high) {
   int pivot = list[low]; // the value we would like to set in the middle
-  int middle = (high+low) / 2;
   int left = (low + 1), right = high; // indices to navigate list
   int left_stop = 0, right_stop = 0; // 0 = false, 1 = true
   int temporary = 0;
 
-  // start: sorting algorithm at each problem
+  // start: BASE CASE
+  if (low >= high)
+    return;
+  // end
+
   while (left != right) {
-    // start: check list elements to see if they need to pivot
+    // check list elements to see if they need to halt or increment/decrement
     if (left_stop == 0 && left != right) {
       if (list[left] > pivot) {
         left_stop = 1;
@@ -174,9 +181,8 @@ void smart_sort(int list[], int low, int high) {
         right--;
       }
     }
-    // end
 
-    // start: SWAP and RESET
+    // SWAP and RESET indices
     if (left_stop == 1 && right_stop == 1) {
       temporary = list[right];
       list[right] = list[left];
@@ -184,11 +190,9 @@ void smart_sort(int list[], int low, int high) {
       left_stop = 0;
       right_stop = 0;
     }
-    // end
   }
-  // end
 
-  // start: swap the pivot
+  // swap the pivot with correct finishing element
   if (list[right] < pivot) {
     list[low] = list[right];
     list[right] = pivot;
@@ -196,11 +200,11 @@ void smart_sort(int list[], int low, int high) {
   else {  // if list[right] >= pivot
     list[low] = list[right-1];
     list[right-1] = pivot;
+    right--;
   }
-  // end
 
-  smart_sort(list, low, middle);
-  smart_sort(list, middle+1, high);
+    smart_sort(list, low, right-1);
+    smart_sort(list, right+1, high);
 }
 
 // --------------- sorting algorithms ---------------------
@@ -255,9 +259,9 @@ void smart_sort_driver() {
 
 
 int main(void) {
-  n = 10;
-  //n = get_array_size();
+  //n = 20;
+  n = get_array_size();
   smart_sort_driver();
-  //mergesort_running();
+  //mergesort_driver();
   return 0;
 }
